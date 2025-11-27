@@ -9,6 +9,61 @@ body {
     min-height: 100vh;
 }
 
+.captcha-box {
+    background: white;
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    text-align: center;
+    width: 300px;
+}
+
+.captcha-content h3 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.captcha-checkbox {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 5px;
+    cursor: pointer;
+    background: #f9f9f9;
+    transition: all 0.3s ease;
+}
+
+.captcha-checkbox:hover {
+    background: #f0f0f0;
+}
+
+.checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #ccc;
+    border-radius: 3px;
+    margin-right: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.loading {
+    animation: spin 1s linear infinite;
+}
+
+.loading::after {
+    content: '⟳';
+    color: #666;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 .container {
     background: white;
     padding: 20px;

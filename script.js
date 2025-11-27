@@ -1,5 +1,9 @@
 class ColorGame {
     constructor() {
+        this.initialCaptcha = document.getElementById('initialCaptcha');
+        this.captchaCheckbox = document.getElementById('captchaCheckbox');
+        this.checkbox = this.captchaCheckbox.querySelector('.checkbox');
+        this.container = document.querySelector('.container');
         this.grid = document.getElementById('grid');
         this.message = document.getElementById('message');
         this.newButton = document.getElementById('new');
@@ -11,7 +15,37 @@ class ColorGame {
         this.differentColor = '';
         this.triesLeft = 3;
         this.gameOver = false;
+        this.verified = false;
         
+        this.setupCaptcha();
+    }
+    
+    setupCaptcha() {
+        this.captchaCheckbox.addEventListener('click', () => {
+            if (!this.verified) {
+                this.startVerification();
+            }
+        });
+    }
+    
+    startVerification() {
+        // Show loading state
+        this.checkbox.classList.add('loading');
+        this.captchaCheckbox.style.cursor = 'default';
+        this.captchaCheckbox.style.background = '#f0f0f0';
+        
+        // Simulate verification process and Show success and transition to main game
+        setTimeout(() => {
+            // Remove loading animation and go straight to game
+            this.checkbox.classList.remove('loading');
+            this.initialCaptcha.style.display = 'none';
+            this.container.style.display = 'block';
+            this.verified = true;
+            this.setupGame();
+        }, 500);
+    }
+    
+    setupGame() {
         this.newButton.addEventListener('click', () => this.setup());
         this.setup();
     }
@@ -46,13 +80,13 @@ class ColorGame {
         // Generate even numbers between 1 and 16: 2, 4, 6, 8, 10, 12, 14, 16
         const evenNumbers = [2, 4, 6, 8, 10, 12, 14, 16];
         this.correctIndex = evenNumbers[Math.floor(Math.random() * evenNumbers.length)];
+
         console.log(`Correct square is number: ${this.correctIndex}`);
         
         // Create grid with numbered squares
         for (let i = 1; i <= 16; i++) {
             const square = document.createElement('div');
             square.className = 'square';
-            // Use i-1 for array indexing since squares are numbered 1-16
             square.style.backgroundColor = i === this.correctIndex ? this.differentColor : this.baseColor;
             square.textContent = i; // Number from 1 to 16
             
@@ -66,10 +100,9 @@ class ColorGame {
         
         const isCorrectColor = (index === this.correctIndex);
         
+        console.log('Correct is:', this.correctIndex);
+             
         // EVIL: Always say it's wrong, even if they pick the right color
-        // If they pick the actual different color, say "that's not an odd number"
-        // If they pick any other square, just say "wrong"
-        
         this.triesLeft--;
         this.triesElement.textContent = this.triesLeft;
         
