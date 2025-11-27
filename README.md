@@ -6,7 +6,7 @@ Is it about the _colours_, or the _numbers_, or _both_, or _neither_...?
 
 _Try pressing the **"make it easier"** button..._ 
 
-**Try it out:** https://irtaza.xyz/Diff-Captcha
+**Try it out:** https://irtaza.xyz/Evil-Captcha
 
 A project for Hack Club [Midnight](https://midnight.hackclub.com/?code=93)! Submitted to r/badUIBattles!
 
