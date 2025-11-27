@@ -7,8 +7,11 @@ class ColorGame {
         this.grid = document.getElementById('grid');
         this.message = document.getElementById('message');
         this.newButton = document.getElementById('new');
+        this.easierButton = document.getElementById('easier');
         this.triesElement = document.getElementById('tries');
         this.botPopup = document.getElementById('botPopup');
+        this.flashlightOverlay = document.getElementById('flashlightOverlay');
+        this.body = document.body;
         
         this.correctIndex = 0;
         this.baseColor = '';
@@ -16,6 +19,7 @@ class ColorGame {
         this.triesLeft = 3;
         this.gameOver = false;
         this.verified = false;
+        this.darkMode = false;
         
         this.setupCaptcha();
     }
@@ -47,7 +51,43 @@ class ColorGame {
     
     setupGame() {
         this.newButton.addEventListener('click', () => this.setup());
+        this.easierButton.addEventListener('click', () => this.toggleFlashlight());
+        this.setupFlashlight();
         this.setup();
+    }
+    
+    setupFlashlight() {
+        // Create flashlight effect
+        document.addEventListener('mousemove', (e) => {
+            if (this.darkMode) {
+                const x = e.clientX;
+                const y = e.clientY;
+                
+                this.flashlightOverlay.style.background = `
+                    radial-gradient(
+                        circle 100px at ${x}px ${y}px,
+                        transparent 0%,
+                        rgba(0,0,0,0.98) 100%
+                    )
+                `;
+            }
+        });
+    }
+    
+    toggleFlashlight() {
+        this.darkMode = !this.darkMode;
+        
+        if (this.darkMode) {
+            this.body.classList.add('dark-mode');
+            this.flashlightOverlay.classList.add('active');
+            this.easierButton.textContent = 'Turn lights on';
+            this.easierButton.style.background = '#FF9800';
+        } else {
+            this.body.classList.remove('dark-mode');
+            this.flashlightOverlay.classList.remove('active');
+            this.easierButton.textContent = 'Make it easier';
+            this.easierButton.style.background = '#2196F3';
+        }
     }
     
     setup() {
@@ -133,10 +173,14 @@ class ColorGame {
             square.onclick = null;
         }
         
-        // Disable new button
+        // Disable buttons
         this.newButton.disabled = true;
         this.newButton.style.background = '#ccc';
         this.newButton.style.cursor = 'not-allowed';
+        
+        this.easierButton.disabled = true;
+        this.easierButton.style.background = '#ccc';
+        this.easierButton.style.cursor = 'not-allowed';
     }
 }
 
